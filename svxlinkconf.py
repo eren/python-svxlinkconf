@@ -89,6 +89,11 @@ class SvxlinkTypeContainer(object):
     def __setitem__(self, key, val):
         self.__check_item_and_update(key, val)
 
+    def get_section_name(self):
+        """Returns a section name"""
+
+        return self._SECTION_NAME
+
     def has_option(self, option):
         """Checks if there is an option in __dict__
 
@@ -221,17 +226,48 @@ class SvxlinkConf():
 
         return map(lambda x: SvxlinkTypeNet(x, self.config.items(x)), remote_nodes)
 
+    def add_section(self, sectionObj):
+        """Adds a section to main svxlink.conf.
+
+        :param sectionObj: An object to add
+        :type sectionObj: One of the SvxlinkType* objects.
+
+        """
+
+        section_name = sectionObj.get_section_name()
+        self.config.add_section(section_name)
+
+        for item in sectionObj.items():
+            print item
+            self.config.set(section_name, item[0], item[1])
+
+    def write(self, file_name, mode="a"):
+        """Save changes in the configuration file
+
+        :param file_name: File name to write to
+        :type file_name: String
+        :param mode: Mode that is used to open the file. **(Default: a)**
+        :type mode: String
+
+        """
+
+        fp = open(file_name, mode)
+        self.config.write(fp)
+        fp.close()
+
+
     def foo(self):
         #f = SvxlinkTypeNet("ErenTurkay", [("tcp_port", "5220"), ("auth_key", "testtest")])
         f = SvxlinkTypeNet("ErenTurkay")
         f["tcp_port"] = 5220
         f["host"] = "localhost"
 
-        print f.is_online()
+        self.add_section(f)
 
+        print self.config.get("ErenTurkay", "Type")
 
 if __name__ == '__main__':
-    f = SvxlinkConf()
+    f = SvxlinkConf("etc/svxlink.conf")
 
 #    for remote in f.get_remote_nodes():
 #        print "%s" % remote
