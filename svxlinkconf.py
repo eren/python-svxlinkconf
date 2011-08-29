@@ -1,7 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
+from collections import OrderedDict
 import iniparse
+
 
 """
 This module provides a way of manipulating svxlink.conf.
@@ -24,10 +27,11 @@ class SvxlinkTypeContainer(object):
         when setting sections. Instead of copying/pasting the code, this
         abstract class checks for valid options when setting an item in class.
 
-        If data is provided, __dict__ is filled with this data.
-        Otherwise, we know that the section is created from scratch so
-        we add TYPE accordingly to type_name argument by default.
-        "Data" is an array of tuple because it's the type that
+        __dbase__ is an internal representation of key/values with an
+        OrderedDict. If data is provided, __dbase__ is filled with this
+        data.  Otherwise, we know that the section is created from
+        scratch so we add TYPE accordingly to type_name argument by
+        default.  "Data" is an array of tuple because it's the type that
         ConfigParser returns. For the ease of use, it's directly used in
         this way.
 
@@ -60,8 +64,12 @@ class SvxlinkTypeContainer(object):
         self._TYPE_NAME = type_name
         self._SECTION_NAME = section_name
 
+        # internal ordered dictionary for storing key/values typical to
+        # section
+        self.__dbase__ = OrderedDict()
+
         if data is None:
-            self.__dict__.update({"TYPE": type_name})
+            self.__dbase__.update({"TYPE": type_name})
         else:
             # start adding values that are in tuple to __dict__
             for tuple_item in data:
@@ -69,7 +77,7 @@ class SvxlinkTypeContainer(object):
                                              tuple_item[1])
 
     def __check_item_and_update(self, key, val):
-        """Checks the item in VALID_OPTIONS and updates __dict__ if the
+        """Checks the item in VALID_OPTIONS and updates __dbase__ if the
         option is valid.
 
         """
@@ -77,14 +85,14 @@ class SvxlinkTypeContainer(object):
             raise ValueError("Option '%s' is not valid for '%s'" %
                     key, self._SECTION_NAME)
 
-        self.__dict__.update({key.upper(): val})
+        self.__dbase__.update({key.upper(): val})
 
 
     def __str__(self):
         return "<Svxlink-%s: %s>" % (self._TYPE_NAME, self._SECTION_NAME)
 
     def __getitem__(self, key):
-        return self.__dict__.get(key.upper());
+        return self.__dbase__.get(key.upper());
 
     def __setitem__(self, key, val):
         self.__check_item_and_update(key, val)
@@ -99,7 +107,7 @@ class SvxlinkTypeContainer(object):
 
         """
 
-        return self.__dict__.has_key(option.upper())
+        return self.__dbase__.has_key(option.upper())
 
     def items(self):
         """Returns ConfigParser compatable output for items in this section.
@@ -113,7 +121,7 @@ class SvxlinkTypeContainer(object):
         # iterate over __dict__, do not take variables that start with _
         # into account.
         output = []
-        for item in self.__dict__:
+        for item in self.__dbase__:
             if not item.startswith("_"):
                 output.append((item, self[item]))
 
@@ -264,7 +272,7 @@ class SvxlinkConf():
 
         self.add_section(f)
 
-        print self.config.get("ErenTurkay", "Type")
+        f.items()
 
 if __name__ == '__main__':
     f = SvxlinkConf("etc/svxlink.conf")
