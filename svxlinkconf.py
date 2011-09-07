@@ -90,7 +90,7 @@ class SvxlinkTypeContainer(object):
 
 
     def __str__(self):
-        return "<Svxlink-%s: %s>" % (self._TYPE_NAME, self._SECTION_NAME)
+        return "<SvxlinkType%s: %s>" % (self._TYPE_NAME, self._SECTION_NAME)
 
     def __getitem__(self, key):
         return self.__dbase__.get(key.upper());
