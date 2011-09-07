@@ -84,7 +84,7 @@ class SvxlinkTypeContainer(object):
         """
         if not key.upper() in self._VALID_OPTIONS:
             raise ValueError("Option '%s' is not valid for '%s'" %
-                    key, self._SECTION_NAME)
+                    (key, self._SECTION_NAME))
 
         self.__dbase__.update({key.upper(): val})
 
@@ -287,8 +287,28 @@ class SvxlinkConf():
         self.config.add_section(section_name)
 
         for item in sectionObj.items():
-            print item
             self.config.set(section_name, item[0], item[1])
+
+    def update_section(self, sectionObj):
+        """Updates the section accordingly to one of the SvxlinkType
+        objects.
+
+        Note that the section should be present before updating.
+
+        :param sectionObjy: sectionObj: One of SvxlinkType objects
+
+        """
+
+        # check if section is present
+        section_name = sectionObj.get_section_name()
+        if not section_name in self.config.sections():
+            raise NoSectionError(section_name)
+
+        # remote the section first
+        self.config.remove_section(section_name)
+        # add it
+        self.add_section(sectionObj)
+
 
     def get_section(self, section_name):
         """Returns one of the SvxlinkType objects accordingly to TYPE=
@@ -324,7 +344,7 @@ class SvxlinkConf():
             return self.config.items(section_name)
         else:
             obj = self._TYPES[type_name]
-            return obj(self.config.items(section_name))
+            return obj(section_name, self.config.items(section_name))
 
     def write(self, file_name, mode="a"):
         """Save changes in the configuration file
@@ -343,11 +363,15 @@ class SvxlinkConf():
 
     def foo(self):
         #f = SvxlinkTypeNet("ErenTurkay", [("tcp_port", "5220"), ("auth_key", "testtest")])
-        f = SvxlinkTypeNet("ErenTurkay")
-        f["tcp_port"] = 5220
-        f["host"] = "localhost"
+        f = self.get_section("Istanbul")
 
-        print self.get_section("Onur")
+        print f.items()
+        f["auth_key"] = '"foobarbaz"'
+        f["host"] = "127.0.0.1"
+        self.update_section(f)
+
+        a = self.get_section("Istanbul")
+        print a.items()
 
 if __name__ == '__main__':
     f = SvxlinkConf("etc/svxlink.conf")
