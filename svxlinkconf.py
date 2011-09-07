@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
 from collections import OrderedDict
 import iniparse
 
+from ConfigParser import NoSectionError, \
+                         NoOptionError
 
 """
 This module provides a way of manipulating svxlink.conf.
@@ -183,8 +184,22 @@ class SvxlinkTypeMulti(SvxlinkTypeContainer):
 
         """
 
-        super(SvxlinkMulti, self).__init__("Multi", section_name,
+        super(SvxlinkTypeMulti, self).__init__("Multi", section_name,
                 ["TRANSMITTERS"],
+                data)
+
+class SvxlinkTypeVoter(SvxlinkTypeContainer):
+    def __init__(self, section_name, data=None):
+        """Initializes the class. It serves as a container for TYPE=Multi.
+
+        :param section_name: Name of the section.
+        :param data: **(Optional)** An array of (name, value) pair.  For
+        example [('receivers', 'Istanbul,Ankara')]
+
+        """
+
+        super(SvxlinkTypeVoter, self).__init__("Voter", section_name,
+                ["RECEIVERS", "VOTING_DELAY", "BUFFER_LENGTH"],
                 data)
 
 
@@ -211,6 +226,32 @@ class SvxlinkConf():
         parser.read(config_file)
 
         self.config = parser
+
+        # mappers to be used in get_section() method. We define here
+        # what class should be used accordingly to TYPE= variable.
+        self._TYPES = {"Net": SvxlinkTypeNet,
+                       "Voter": SvxlinkTypeVoter,
+                       "Multi": SvxlinkTypeMulti}
+
+    def is_item_present_in_pair(self, item, data):
+        """Checks if there is an item in an array of (key, value) pair.
+
+        :param data: An array of (key, value) pair. For example:
+        [('type', 'Voter'), ('receivers', 'Rx1,Local'), ('voting_delay',
+        '200')]
+        :type data: Array
+        :returns: True or False
+        :rtype: Boolean
+
+        """
+
+        for i in data:
+            if i[0] == item:
+                return True
+            else:
+                continue
+
+        return False
 
 
     def get_remote_nodes(self):
@@ -249,6 +290,42 @@ class SvxlinkConf():
             print item
             self.config.set(section_name, item[0], item[1])
 
+    def get_section(self, section_name):
+        """Returns one of the SvxlinkType objects accordingly to TYPE=
+        value of the section.
+
+        If there are no SvxlinkType classes associated with the value,
+        an array of (key, value) pair is returned.
+
+        :param section_name: Name of the section to get
+        :type section_name: String.
+
+        """
+
+        # check if section is present in config
+        if not section_name in self.config.sections():
+            raise NoSectionError(section_name)
+
+        # TODO: We would want to handle different sections, so remember
+        # this line that even if TYPE is not present, we would want to
+        # handle it differently instead of returning items
+
+        # check if option is present. If TYPE is not present, just
+        # return items
+        if not self.is_item_present_in_pair("type",
+                                            self.config.items(section_name)):
+            return self.config.items(section_name)
+
+        # now we know TYPE is present, try to find associated class.
+        type_name = self.config.get(section_name, "TYPE")
+
+        if not type_name in self._TYPES:
+            # nothing to return as an object, return items
+            return self.config.items(section_name)
+        else:
+            obj = self._TYPES[type_name]
+            return obj(self.config.items(section_name))
+
     def write(self, file_name, mode="a"):
         """Save changes in the configuration file
 
@@ -270,9 +347,7 @@ class SvxlinkConf():
         f["tcp_port"] = 5220
         f["host"] = "localhost"
 
-        self.add_section(f)
-
-        f.items()
+        print self.get_section("Onur")
 
 if __name__ == '__main__':
     f = SvxlinkConf("etc/svxlink.conf")
