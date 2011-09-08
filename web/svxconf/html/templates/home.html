@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="breadcrumb">
+    Anasayfa /
+</div>
+<hr />
+			<table class="table1">
+			<thead>
+				<tr>
+				<th colspan="2">Ses Ayarları</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<th>Ses Alınan İstasyonlar</th>
+				<th>Ses Gönderilen İstasyonlar</th>
+				</tr>
+				<tr>
+                    <th class="sub"><a href="#"><span class="success">İstanbul (İş Kulesi)</span></a></th>
+                    <td><span class="success">Erzincan</span></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="success">Ankara (AFAD)</span></th>
+                    <td><span class="success">Erzurum</span></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="success">Ankara (Sivil Savunma)</span></th>
+                    <td><span class="error">Sakarya</span></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="error">Gebze</span></th>
+                    <td></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="success">Hereke</span></th>
+                    <td></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="success">Bursa</span></th>
+                    <td></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="success">Erzincan</span></th>
+                    <td></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="success">Erzurum</span></th>
+                    <td></td>
+				</tr>
+				<tr>
+                    <th class="sub"><span class="error">Sakarya</span></th>
+                    <td></td>
+				</tr>
+			</tbody>
+			</table>
+            <br />
+            <small><span class="error">Kırmızı</span> olarak görünen istasyonlar ulaşılamayan istasyonlardır. <span class="success">Yeşil</span> olarak görünenler ise sağlıklı durumlarda olanlardır. Bu liste 1 dakika arayla otomatik olarakyenilenir ve istemcilerin durumu kontrol edilir.</small>
+
+{% endblock %}
