@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from collections import OrderedDict
-import iniparse
 
+import iniparse
 from ConfigParser import NoSectionError, \
                          NoOptionError
+
 
 """
 This module provides a way of manipulating svxlink.conf.
@@ -185,7 +186,7 @@ class SvxlinkTypeMulti(SvxlinkTypeContainer):
         """
 
         super(SvxlinkTypeMulti, self).__init__("Multi", section_name,
-                ["TRANSMITTERS"],
+                ["TYPE", "TRANSMITTERS"],
                 data)
 
 class SvxlinkTypeVoter(SvxlinkTypeContainer):
@@ -199,7 +200,7 @@ class SvxlinkTypeVoter(SvxlinkTypeContainer):
         """
 
         super(SvxlinkTypeVoter, self).__init__("Voter", section_name,
-                ["RECEIVERS", "VOTING_DELAY", "BUFFER_LENGTH"],
+                ["TYPE", "RECEIVERS", "VOTING_DELAY", "BUFFER_LENGTH"],
                 data)
 
 
@@ -215,6 +216,11 @@ class SvxlinkConf():
         Initializes the class. Be sure that the file exists before
         using this class as we do not control whether the file exists or
         not
+
+        This is an abstraction layer over ConfigParser. If you feel that
+        this class lacks some support for manipulating configuration
+        files, SvxlinkConf.parser can be used. This is an instance of
+        iniparser.ConfigParser().
 
         :param config_file: Config file to read or manipulate ** (default:
             /etc/svxlink/svxlink.conf)**
@@ -363,15 +369,9 @@ class SvxlinkConf():
 
     def foo(self):
         #f = SvxlinkTypeNet("ErenTurkay", [("tcp_port", "5220"), ("auth_key", "testtest")])
-        f = self.get_section("Istanbul")
+        f = self.get_section("MultiRx")
 
         print f.items()
-        f["auth_key"] = '"foobarbaz"'
-        f["host"] = "127.0.0.1"
-        self.update_section(f)
-
-        a = self.get_section("Istanbul")
-        print a.items()
 
 if __name__ == '__main__':
     f = SvxlinkConf("etc/svxlink.conf")
