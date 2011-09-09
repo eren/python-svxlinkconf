@@ -1,11 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response
+from svxconf.wrapper import render_response
+
+import comar
 
 def home(request):
-    return render_to_response("home.html")
-
+    data = {"css_link_main": "active"}
+    return render_response(request, "home.html", data)
 
 def about(request):
-    return render_to_response("about.html")
+    data = {"css_link_about": "active"}
+    return render_response(request, "about.html", data)
+
+
+def restart(request):
+    print

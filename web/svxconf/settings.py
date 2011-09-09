@@ -96,6 +96,10 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+        "svxconf.context_processors.is_svxlink_running",
+)
+
 ROOT_URLCONF = 'svxconf.urls'
 
 TEMPLATE_DIRS = (
@@ -108,6 +112,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
+    'svxconf',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

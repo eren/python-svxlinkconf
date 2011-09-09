@@ -26,29 +26,33 @@ http://creativecommons.org/licenses/GPL/2.0/
 	<div id="header">
 		<div id="site-name">Röle Sunucusu Kontrol Arabirimi</div>
 		<ul id="nav">
-		<li class="first active"><a href="/">Anasayfa</a></li>
-		<li><a href="#">Sunucu Yapılandırma</a>
+            <li class="first {{ css_link_main }}"><a href="/">Anasayfa</a></li>
+            <li class="{{ css_link_server }}"><a href="#">Sunucu Yapılandırma</a>
 			<ul>
-			<li class="first"><a href="#">Genel Ayarları Değiştir</a></li>
-			<li><a href="#">Sunucuyu Yeniden Başlat</a></li>
-			<li><a href="#">Sunucuyu Kapat</a></li>
+                <li class="first"><a href="/svxlink/config/">Genel Ayarları Değiştir</a></li>
+                <li><a href="/svxlink/restart/">Sunucuyu Yeniden Başlat</a></li>
+                <li><a href="/svxlink/stop/">Sunucuyu Kapat</a></li>
 			</ul>
-		</li>
-		<li><a href="#">Uzak İstemci Yapılandırma</a>
-			<ul>
-			<li class="first"><a href="#">Yeni İstemci Ekle</a></li>
-            <li class="last"><a href="#">İstemci Ayarlarını Değiştir</a></li>
-			</ul>
-		</li>
-        <li><a href="/hakkinda/">Hakkında</a></li>
+	    	</li>
+            <li class="{{ css_link_client }}"><a href="#">Uzak İstemci Yapılandırma</a>
+                <ul>
+                <li class="first"><a href="/node/new">Yeni İstemci Ekle</a></li>
+                <li class="last"><a href="/node/edit">İstemci Ayarlarını Değiştir</a></li>
+                </ul>
+		    </li>
+            <li class="{{ css_link_about }}"><a href="/hakkinda/">Hakkında</a></li>
 		</ul>
 	</div>
 	
 	<div id="content-wrap">
 	
 		<div id="utility">
-
-            Svxlink Sunucusu <span class="success">çalışıyor</span>
+            Svxlink Sunucusu
+            {% if not is_svxlink_running %}
+                <span class="error">KAPALI!</span>
+            {% else %}
+                <span class="success">aktif</span>
+            {% endif %}
             <br /><br />
             Toplam istemci sayısı: <b>7</b>
             <br />
