@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import comar
+import svxlinkconf
 
 def is_svxlink_running(request):
     # FIXME: Other distros will need different ways of checking the
@@ -18,3 +19,9 @@ def is_svxlink_running(request):
         return {"is_svxlink_running": False}
     else:
         return {"is_svxlink_running": True}
+
+def total_remote_nodes(request):
+    conf = svxlinkconf.SvxlinkConf()
+
+    return {"total_remote_nodes": len(conf.get_remote_nodes())}
+

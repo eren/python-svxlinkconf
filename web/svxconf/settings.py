@@ -98,6 +98,7 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
         "svxconf.context_processors.is_svxlink_running",
+        "svxconf.context_processors.total_remote_nodes",
 )
 
 ROOT_URLCONF = 'svxconf.urls'

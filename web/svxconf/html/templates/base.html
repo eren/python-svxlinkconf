@@ -34,10 +34,12 @@ http://creativecommons.org/licenses/GPL/2.0/
                 <li><a href="/svxlink/stop/">Sunucuyu Kapat</a></li>
 			</ul>
 	    	</li>
-            <li class="{{ css_link_client }}"><a href="#">Uzak İstemci Yapılandırma</a>
+            <li class="{{ css_link_client }}"><a href="#">Uzak İstasyon
+            Ayarları</a>
                 <ul>
-                <li class="first"><a href="/node/new/">Yeni İstemci Ekle</a></li>
-                <li class="last"><a href="/node/edit/">İstemci Ayarlarını Değiştir</a></li>
+                <li class="first"><a href="/node/new/">Yeni İstasyon Ekle</a></li>
+                <li class="last"><a href="/node/edit/">İstasyon
+                    Ayarlarını Değiştir</a></li>
                 </ul>
 		    </li>
             <li class="{{ css_link_about }}"><a href="/hakkinda/">Hakkında</a></li>
@@ -54,9 +56,7 @@ http://creativecommons.org/licenses/GPL/2.0/
                 <span class="success">aktif</span>
             {% endif %}
             <br /><br />
-            Toplam istemci sayısı: <b>7</b>
-            <br />
-            Aktif istemci sayıs: <b>5</b>
+            Toplam istasyon sayısı: <b>{{ total_remote_nodes }}</b>
             <!--
 			<ul id="nav-secondary">
 			<li class="first"><a href="#">Latinus Wordus</a></li>
