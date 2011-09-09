@@ -1,0 +1,73 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="breadcrumb">
+    <a href="/">Anasayfa</a> / Uzak İstemci Ayarları / İstemci Ekle
+</div>
+    <hr />
+
+
+{% if node_access_ok %}
+<div class="featurebox">
+    <h3><span class="success">Eklemek İstenilen İstemciye Ulaşılabiliyor</span></h3>
+    <p>Eklenilmek istenen istemciye ulaşmada herhangi bir problem görünmüyor. İstemciyi şu anda ekleyebilirsiniz.</p>
+</div>
+{% endif %}
+
+{% if node_access_error %}
+<div class="featurebox">
+    <h3>Eklenilmek İstenen İstemci Yanıt Vermiyor!</h3>
+    <p>Eklenilmek istenen istemciye ulaşılamadı. Lütfen ayarlarını kontrol ediniz. İstemci bu durumda da eklenebilmesine karşın çalışır durumda olarak eklenmesi yararlı olacaktır.</p>
+</div>
+{% endif %}
+
+<form method="post" class="f-wrap-1">
+
+<div class="req"><b>*</b> Zorunlu alanları gösterir</div>
+
+<fieldset>
+
+<h3>Yeni Uzak İstemci Ekle</h3>
+
+<label for="id_node_name"><b><span class="req">*</span>Uzak İstemci Adı:</b>
+    <!--
+    <input id="id_node_name" name="node_name" type="text" class="f-name" tabindex="1" />&nbsp;&nbsp;<em>Lütfen bu alanda Türkçe karakter kullanmayın.</em><br />
+    -->
+    {{ form.node_name }} &nbsp;&nbsp; {{ form.node_name.errors }}
+</label>
+
+<label for="id_ip_address"><b><span class="req">*</span>IP Adresi:</b>
+    <!--
+<input id="id_ip_address" name="ip_address" type="text" class="f-name" tabindex="2" /><br />
+-->
+    {{ form.ip_address }} &nbsp;&nbsp; {{ form.ip_address.errors }}
+
+</label>
+
+<label for="id_port"><b><span class="req">*</span>Port:</b>
+    <!--
+<input id="id_port" name="port" type="text" value="5220" class="f-name" tabindex="3" /><br />
+-->
+    {{ form.port }} &nbsp;&nbsp; {{ form.port.errors }}
+</label>
+
+<label for="id_auth_key"><b><span class="req">*</span>Kimlik Doğrulama Anahtarı:</b>
+    <!--
+<input id="id_auth_key" name="auth_key" type="text" class="f-name" tabindex="4" /><br />
+-->
+    {{ form.auth_key }} &nbsp;&nbsp; {{ form.auth_key.errors }}
+
+</label>
+
+</fieldset>
+
+<div class="f-submit-wrap">
+<input name="control" type="submit" value="Kontrol Et" class="f-submit" tabindex="5" />
+<input name="add" type="submit" value="Ekle" class="f-submit" tabindex="6" /><br />
+</div>
+
+</form>
+
+{% endblock content %}
