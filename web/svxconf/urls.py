@@ -7,6 +7,8 @@ from django.conf.urls.defaults import patterns, include, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^hakkinda/$', 'svxconf.views.about'),
+    url(r'^node/new/$', 'svxconf.views.node_new'),
+    url(r'^node/edit/$', 'svxconf.views.node_edit'),
     url(r'^$', 'svxconf.views.home'),
     # url(r'^svxconf/', include('svxconf.foo.urls')),
 
