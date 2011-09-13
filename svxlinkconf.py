@@ -162,12 +162,12 @@ class SvxlinkTypeNet(SvxlinkTypeContainer):
 
         # we need 3 second delay at most, otherwise we may think that
         # host is not running.
-        socket.setdefaulttimeout(3.00)
+        socket.setdefaulttimeout(0.5)
         s = socket.socket(socket.AF_INET,
                           socket.SOCK_STREAM)
 
         try:
-            s.connect((self["HOST"], self["TCP_PORT"]))
+            s.connect((self["HOST"], int(self["TCP_PORT"])))
             return True
         except:
             # FIXME: For debug purposes, we need to get what the
