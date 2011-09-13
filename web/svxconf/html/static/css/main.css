@@ -286,3 +286,55 @@ hr {margin: 1em 0;background:#f2f2f2;height:1px;color:#f2f2f2;border:none;clear:
 #footer {clear:both;border-top: 1px solid #E3E8EE;padding: 10px 0 30px;font-size:86%;color:#999}
 	#footer p {margin:0}
 	#footer a:link {color:#999}
+
+/* SPECIFIC USAGE */
+
+#sound_table_container {
+    border: 2px solid #900;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+#sound_table_title {
+    color:#fff;
+    font-size:145%;
+    font-weight: bold;
+    background: #900 url("images/sprites.gif") repeat-x 0 -1300px;
+    padding: 10px 6px;
+}
+
+#sound_table_row {
+    color:#fff;
+    font-size:115%;
+    background: #88b8db url("images/sprites.gif") repeat-x 0 -1400px;
+    padding: 6px;
+    margin-top: 1px;
+}
+
+#sound_table_receiver {
+    width: 50%;
+    float: left;
+}
+
+#sound_table_receiver div.sub {
+    font-size:100%;
+    color:#000;
+    background: #efefef url("images/sprites.gif") repeat-x 0 -1500px;
+    padding: 6px;
+    margin-bottom: 2px;
+}
+
+
+#sound_table_transmitter {
+    width: 50%;
+    float: right;
+}
+
+#sound_table_transmitter div.sub {
+    font-size:100%;
+    color:#000;
+    padding: 6px;
+    margin-bottom: 2px;
+}
