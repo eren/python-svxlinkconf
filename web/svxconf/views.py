@@ -36,14 +36,9 @@ def home(request):
         tx_output.append({"name": i.get_section_name(),
                             "is_online": i.is_online()})
 
-    print rx_output
-
     data = {"css_link_main": "active",
             "receivers": rx_output,
             "transmitters": tx_output}
-
-
-
 
     return render_response(request, "home.html", data)
 
@@ -103,3 +98,51 @@ def node_new(request):
                 "css_link_client": "active"}
 
         return render_response(request, "node_new.html", data)
+
+
+def node_edit(request):
+    """A page that manipulates TYPE=Voter and TYPE=Multi sections.
+
+    """
+    conf = SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
+
+    if request.method == "POST":
+        rx = ",".join(request.POST["rx"])
+        tx = ",".join(request.POST["tx"])
+
+        # FIXME: DO NOT HARDCODE...
+        conf.config.set("MultiTx", "TRANSMITTERS", tx)
+        conf.config.set("MultiRx", "RECEIVERS", rx)
+        #conf.write()
+
+        return render_response(request, "node_edit_ok.html",
+                                        {"css_link_client": "active"})
+    else:
+        # FIXME: DO NOT HARDCODE...
+        r = conf.get_section("MultiRx")
+        receivers = r["RECEIVERS"].split(",")
+
+        t = conf.get_section("MultiTx")
+        transmitters = t["TRANSMITTERS"].split(",")
+
+        all_nodes = conf.get_remote_nodes()
+
+        def is_in_rx(node):
+            return node in receivers
+
+        def is_in_tx(node):
+            return node in transmitters
+
+
+        output = []
+        for node in all_nodes:
+            name = node.get_section_name()
+            output.append({"name": name,
+                          "is_online": node.is_online(),
+                          "is_in_rx": is_in_rx(name),
+                          "is_in_tx": is_in_tx(name)})
+
+        data = {"css_link_client": "active",
+                "nodes": output}
+
+        return render_response(request, "node_edit.html", data)

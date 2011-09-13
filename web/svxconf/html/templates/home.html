@@ -14,24 +14,31 @@
                     {% for receiver in receivers %}
                     <div class="sub">
                         {% if receiver.is_online %}
-                            <span class="success">{{ receiver.name }}</span>
+                        <span class="success">
+                            <a href="/node/edit/{{ receiver.name }}/">{{ receiver.name }}</a>
+                        </span>
                         {% else %}
-                            <span class="error">{{ receiver.name }}</span>
+                        <span class="error">
+                            <a href="/node/edit/{{ receiver.name }}/">{{ receiver.name }}</a>
+                        </span>
                         {% endif %}
                     </div>
                     {% endfor %}
 
                 </div>
                 <div id="sound_table_transmitter">
-                    <div id="sound_table_row"><b>Ses Gönderilen
-                            İstasyonlar</b></div>
+                    <div id="sound_table_row"><b>Alınan Sesin Gönderildiği İstasyonlar</b></div>
 
                     {% for transmitter in transmitters %}
                     <div class="sub">
                         {% if transmitter.is_online %}
-                            <span class="success">{{ transmitter.name }}</span>
+                        <span class="success">
+                            <a href="/node/edit/{{ transmitter.name }}/">{{ transmitter.name }}</a>
+                        </span>
                         {% else %}
-                            <span class="error">{{ transmitter.name }}</span>
+                        <span class="error">
+                            <a href="/node/edit/{{ transmitter.name }}/">{{ transmitter.name }}</a>
+                        </span>
                         {% endif %}
                     </div>
                     {% endfor %}

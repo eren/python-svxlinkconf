@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="breadcrumb">
+    <a href="/">Anasayfa</a> / Uzak İstasyon Ayarları
+</div>
+    <hr />
+
+
+<form method="post" class="f-wrap-1">
+            <div id="sound_table_container">
+                <div id="sound_table_title">Ses Alınan ve Gönderilen İstasyonları Düzenle</div>
+                <div id="sound_table_receiver">
+                    <div id="sound_table_row"><b>Ses Alınan
+                            İstasyonlar</b></div>
+
+                    {% for node in nodes %}
+                    <div class="sub">
+                        <span class="{% if node.is_online %}success{% else %}error{% endif %}">
+                            <label for="id-{{node.name}}">
+                                <input type="checkbox" name="rx" class="f-checkbox" value="{{node.name}}" id="rx-{{node.name}}"
+                                {% if node.is_in_rx %}checked="checked"{%endif%} /> {{ node.name }}
+                            </label>
+                        </span>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div id="sound_table_transmitter">
+                    <div id="sound_table_row"><b>Alınan Sesin Gönderildiği İstasyonlar</b></div>
+
+                    {% for node in nodes %}
+                    <div class="sub">
+                        <span class="{% if node.is_online %}success{% else %}error{% endif %}">
+                            <label for="id-{{node.name}}">
+                                <input type="checkbox" name="tx" class="f-checkbox" value="{{node.name}}" id="tx-{{node.name}}"
+                                {% if node.is_in_tx %}checked="checked"{%endif%} /> {{ node.name }}
+                            </label>
+                        </span>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <br />
+            <small><span class="error">Kırmızı</span> olarak görünen istasyonlar ulaşılamayan istasyonlardır. <span class="success">Yeşil</span> olarak görünenler ise sağlıklı durumlarda olanlardır. </small>
+            <br />
+
+    <div class="f-submit-wrap">
+    <input name="add" type="submit" value="Düzenle" class="f-submit" tabindex="6" /><br />
+    </div>
+
+</form>
+
+{% endblock content %}
