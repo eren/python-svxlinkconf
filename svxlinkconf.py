@@ -99,6 +99,10 @@ class SvxlinkTypeContainer(object):
     def __setitem__(self, key, val):
         self.__check_item_and_update(key, val)
 
+    def __eq__(self, other):
+        # compare any object with our section name.
+        return other == self._SECTION_NAME
+
     def get_section_name(self):
         """Returns a section name"""
 
