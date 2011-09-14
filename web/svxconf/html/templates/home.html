@@ -14,13 +14,9 @@
                     {% for receiver in receivers %}
                     <div class="sub">
                         {% if receiver.is_online %}
-                        <span class="success">
-                            <a href="/node/edit/{{ receiver.name }}/">{{ receiver.name }}</a>
-                        </span>
+                        <a href="/node/edit/{{ receiver.name }}/"><span class="success">{{ receiver.name }}</span></a>
                         {% else %}
-                        <span class="error">
-                            <a href="/node/edit/{{ receiver.name }}/">{{ receiver.name }}</a>
-                        </span>
+                        <a href="/node/edit/{{ receiver.name }}/"><span class="error">{{ receiver.name }}</span></a>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -32,13 +28,9 @@
                     {% for transmitter in transmitters %}
                     <div class="sub">
                         {% if transmitter.is_online %}
-                        <span class="success">
-                            <a href="/node/edit/{{ transmitter.name }}/">{{ transmitter.name }}</a>
-                        </span>
+                        <a href="/node/edit/{{ receiver.name }}/"><span class="success">{{ transmitter.name }}</span></a>
                         {% else %}
-                        <span class="error">
-                            <a href="/node/edit/{{ transmitter.name }}/">{{ transmitter.name }}</a>
-                        </span>
+                        <a href="/node/edit/{{ receiver.name }}/"><span class="error">{{ transmitter.name }}</span></a>
                         {% endif %}
                     </div>
                     {% endfor %}

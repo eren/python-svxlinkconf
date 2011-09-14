@@ -107,13 +107,13 @@ def node_edit(request):
     conf = SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
 
     if request.method == "POST":
-        rx = ",".join(request.POST["rx"])
-        tx = ",".join(request.POST["tx"])
+        rx = ",".join(request.POST.getlist("rx"))
+        tx = ",".join(request.POST.getlist("tx"))
 
         # FIXME: DO NOT HARDCODE...
         conf.config.set("MultiTx", "TRANSMITTERS", tx)
         conf.config.set("MultiRx", "RECEIVERS", rx)
-        #conf.write()
+        conf.write()
 
         return render_response(request, "node_edit_ok.html",
                                         {"css_link_client": "active"})
