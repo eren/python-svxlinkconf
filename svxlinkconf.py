@@ -235,6 +235,7 @@ class SvxlinkConf():
         parser = iniparse.ConfigParser()
         parser.read(config_file)
 
+        self.config_file = config_file
         self.config = parser
 
         # mappers to be used in get_section() method. We define here
@@ -356,7 +357,7 @@ class SvxlinkConf():
             obj = self._TYPES[type_name]
             return obj(section_name, self.config.items(section_name))
 
-    def write(self, file_name, mode="a"):
+    def write(self, file_name=None, mode="w+"):
         """Save changes in the configuration file
 
         :param file_name: File name to write to
@@ -365,6 +366,9 @@ class SvxlinkConf():
         :type mode: String
 
         """
+
+        if not file_name:
+            file_name = self.config_file
 
         fp = open(file_name, mode)
         self.config.write(fp)
