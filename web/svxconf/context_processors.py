@@ -21,7 +21,7 @@ def is_svxlink_running(request):
         return {"is_svxlink_running": True}
 
 def total_remote_nodes(request):
-    conf = svxlinkconf.SvxlinkConf()
+    conf = svxlinkconf.SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
 
     return {"total_remote_nodes": len(conf.get_remote_nodes())}
 

@@ -99,7 +99,7 @@ hr {margin: 1em 0;background:#f2f2f2;height:1px;color:#f2f2f2;border:none;clear:
 /* LAYOUT - HEADER */
 #header {background: #666 url("images/sprites.gif") repeat-x 0 100%;margin: 0 0 25px;padding: 0 0 8px}
 
-	#header #site-name {font: 265% arial;letter-spacing: -.05em;margin:0 0 0 40px;padding:3px 0;color:#ccc;border:none}
+	#header #site-name {font: 265% arial;letter-spacing: -.05em;margin:0 0 0 40px;padding:10px 0;color:#ccc;border:none}
 	
 	/* NAV - top horizontal nav */
 	#nav, #nav ul {padding: 0;margin: 0;list-style: none}
@@ -140,7 +140,7 @@ hr {margin: 1em 0;background:#f2f2f2;height:1px;color:#f2f2f2;border:none;clear:
 	#search input.f-submit {width:auto;font-size:81%;margin:0 0 -.15em;height:1.95em}
 	
 	/* POWERED BY - mollio logo in this case */
-	#poweredby {width:96px;height:63px;position:absolute;top:-94px;right:0}
+	#poweredby {width:176px;height:63px;position:absolute;top:-103px;right:0}
 
 /* LAYOUT - main body of page */
 #wrap {min-width:770px;max-width:1200px;margin: 0 auto;position:relative}
