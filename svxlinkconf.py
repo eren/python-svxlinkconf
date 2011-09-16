@@ -133,14 +133,27 @@ class SvxlinkTypeContainer(object):
 
         return output
 
+    def is_online(self):
+        """An abstract method for checking if the section is up.
+
+        This method should be implemented in SvxlinkType objects. By
+        default, it returns true. For example, for a
+        SvxlinkTypeRepeater, is_online() method can check if the
+        repeater is in LOGICS option in GLOBAL section. For a Local
+        device, this method can check if the card is listed by ALSA and
+        can be accessed without a problem.
+
+        """
+
+        return True
+
 class SvxlinkTypeNet(SvxlinkTypeContainer):
-    """The class that represents TYPE=Net section in svxlink
+    """The class that represents TYPE=Net section
 
     """
 
     def __init__(self, section_name, data=None):
-        """Initializes the class. It serves as a container for TYPE=Net.
-
+        """
         :param section_name: Name of the section.
         :param data: **(Optional)** An array of (name, value) pair.  For
         example [('host', 'localhost'), ('tcp_port', '5220')]
@@ -180,8 +193,12 @@ class SvxlinkTypeNet(SvxlinkTypeContainer):
 
 
 class SvxlinkTypeMulti(SvxlinkTypeContainer):
+    """The class that represents TYPE=Multi section
+
+    """
+
     def __init__(self, section_name, data=None):
-        """Initializes the class. It serves as a container for TYPE=Multi.
+        """
 
         :param section_name: Name of the section.
         :param data: **(Optional)** An array of (name, value) pair.  For
@@ -194,8 +211,12 @@ class SvxlinkTypeMulti(SvxlinkTypeContainer):
                 data)
 
 class SvxlinkTypeVoter(SvxlinkTypeContainer):
+    """The class that represents TYPE=Voter section
+
+    """
+
     def __init__(self, section_name, data=None):
-        """Initializes the class. It serves as a container for TYPE=Multi.
+        """
 
         :param section_name: Name of the section.
         :param data: **(Optional)** An array of (name, value) pair.  For
@@ -207,6 +228,30 @@ class SvxlinkTypeVoter(SvxlinkTypeContainer):
                 ["TYPE", "RECEIVERS", "VOTING_DELAY", "BUFFER_LENGTH"],
                 data)
 
+class SvxlinkTypeLocal(SvxlinkTypeContainer):
+    """The class that represents TYPE=Local section
+
+    """
+
+    def __init__(self, section_name, data=None):
+        """
+
+        :param section_name: Name of the section.
+        :param data: **(Optional)** An array of (name, value) pair.  For
+        example [('audio_dev', 'alsa:plughw:0'), ('audio_channel', 0)]
+
+        """
+
+        # FIXME: These are not all valid options. I use only these
+        # options so I added them for rapid development. Will add other
+        # options as well
+        super(SvxlinkTypeLocal, self).__init__("Local", section_name,
+                ['TYPE', 'AUDIO_DEV', 'AUDIO_CHANNEL', 'SQL_DET',
+                    'SQL_START_DELAY', 'SQL_DELAY', 'SQL_HANGTIME',
+                    'VOX_FILTER_DEPTH', 'VOX_THRESH', 'CTCSS_FQ',
+                    'CTCSS_THRESH', 'DEEMPHASIS', 'DTMF_DEC_TYPE',
+                    'SERIAL_PORT', 'PTT_PIN', 'PTT_PORT', 'TX_DELAY'],
+                data)
 
 class SvxlinkConf():
     """Main class
@@ -242,6 +287,7 @@ class SvxlinkConf():
         # what class should be used accordingly to TYPE= variable.
         self._TYPES = {"Net": SvxlinkTypeNet,
                        "Voter": SvxlinkTypeVoter,
+                       "Local": SvxlinkTypeLocal,
                        "Multi": SvxlinkTypeMulti}
 
     def is_item_present_in_pair(self, item, data):
@@ -377,9 +423,9 @@ class SvxlinkConf():
 
     def foo(self):
         #f = SvxlinkTypeNet("ErenTurkay", [("tcp_port", "5220"), ("auth_key", "testtest")])
-        f = self.get_section("MultiRx")
+        f = self.get_section("Rx1")
 
-        print f.items()
+        print f.is_online()
 
 if __name__ == '__main__':
     f = SvxlinkConf("etc/svxlink.conf")
