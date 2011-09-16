@@ -83,9 +83,9 @@ def node_new(request):
                             data)
             else:
                 # now user wants to add the node
-                conf = SvxlinkConf("/etc/svxlink/svxlink.conf")
+                conf = SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
                 conf.add_section(node)
-                conf.write("sample.conf")
+                conf.write()
 
                 data.update({"node_name": form.cleaned_data["node_name"]})
 
