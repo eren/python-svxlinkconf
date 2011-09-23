@@ -83,4 +83,4 @@ Contributing
 Contact
 -------
 
-Eren Türkay (TA1AET) <eren ·--·-· pardus.org.tr>
+Eren Türkay (TA1AET) &gt;eren ·--·-· pardus.org.tr&lt;
