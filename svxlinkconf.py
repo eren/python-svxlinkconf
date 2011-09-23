@@ -250,7 +250,8 @@ class SvxlinkTypeLocal(SvxlinkTypeContainer):
                     'SQL_START_DELAY', 'SQL_DELAY', 'SQL_HANGTIME',
                     'VOX_FILTER_DEPTH', 'VOX_THRESH', 'CTCSS_FQ',
                     'CTCSS_THRESH', 'DEEMPHASIS', 'DTMF_DEC_TYPE',
-                    'SERIAL_PORT', 'PTT_PIN', 'PTT_PORT', 'TX_DELAY'],
+                    'SERIAL_PORT', 'PTT_PIN', 'PTT_PORT', 'TX_DELAY',
+                    'TIMEOUT', 'PREEMPHASIS'],
                 data)
 
 class SvxlinkConf():
