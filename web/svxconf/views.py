@@ -113,7 +113,16 @@ def node_edit(request):
         rx = ",".join(request.POST.getlist("rx"))
         tx = ",".join(request.POST.getlist("tx"))
 
-        # FIXME: DO NOT HARDCODE...
+        # control if any tx, rx are specified. At least one rx and one
+        # tx should be specified.
+        if len(rx) == 0 or len(tx) == 0:
+            return render_response(request,
+                                   "node_edit_ok.html",
+                                   {"css_link_client": "active",
+                                     "error": True})
+
+
+        # FIXME: DO NOT HARDCODE SECTION NAME
         conf.config.set("MultiTx", "TRANSMITTERS", tx)
         conf.config.set("MultiRx", "RECEIVERS", rx)
         conf.write()
@@ -121,7 +130,7 @@ def node_edit(request):
         return render_response(request, "node_edit_ok.html",
                                         {"css_link_client": "active"})
     else:
-        # FIXME: DO NOT HARDCODE...
+        # FIXME: DO NOT HARDCODE SECTION NAME
         r = conf.get_section("MultiRx")
         receivers = r["RECEIVERS"].split(",")
 
@@ -162,10 +171,12 @@ def svxlink_stop(request):
     # processor indicates that the server is running
     time.sleep(0.5)
 
-    return render_response(request, "svxlink_stop.html")
+    return render_response(request, "svxlink_stop.html",
+                                    {"css_link_server": "active"})
 
 def svxlink_start(request):
     os.utime(os.path.join(SERVICE_MANAGE_DIR, "START"), None)
     time.sleep(0.5)
 
-    return render_response(request, "svxlink_start.html")
+    return render_response(request, "svxlink_start.html",
+                                    {"css_link_server": "active"})

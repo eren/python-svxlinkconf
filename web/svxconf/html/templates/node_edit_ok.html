@@ -7,9 +7,19 @@
 </div>
     <hr />
 
+{% if error %}
+<div class="featurebox">
+    <h3><span class="error">Hata!</span></h3>
+    <p>Ses alınan veya ses gönderilen istasyonlardan bir tanesini
+    seçmediniz. En azından 1 adet ses alıcı ve 1 adet alınan sesin
+    gönderildiği istasyon seçmelisiniz.</p>
+    <p><a href="/node/edit/">Geri</a></p>
+</div>
+{% else %}
 <div class="featurebox">
     <h3><span class="success">İstasyonlar Güncellendi</span></h3>
     <p>İstasyonlar başarı ile güncellendi.</p>
 </div>
+{% endif %}
 
 {% endblock content %}
