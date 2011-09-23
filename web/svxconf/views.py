@@ -7,21 +7,21 @@ from svxlinkconf import SvxlinkConf, \
 from svxconf.wrapper import render_response
 from svxconf.forms import NewNodeForm
 
+from svxconf.settings import SVXLINK_CONF, \
+                             SERVICE_MANAGE_DIR
+
 def home(request):
-    conf = SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
+    conf = SvxlinkConf(SVXLINK_CONF)
 
     # FIXME: Use some kind of "get_voter()" function to select Voter
     # section. Hardcoding the section is not a good way.
 
-    # FIXME: I assume that Voter and Multi TYPEs include only remote
-    # nodes. Local sound devices can also be here. I'm omiting this fact
-    # for now and treating all the nodes as TYPE=Net
     r = conf.get_section("MultiRx")
-    receivers = map(lambda x: SvxlinkTypeNet(x, conf.config.items(x)), \
+    receivers = map(lambda x: conf.get_section(x), \
             r["RECEIVERS"].split(","))
 
     t = conf.get_section("MultiTx")
-    transmitters = map(lambda x: SvxlinkTypeNet(x, conf.config.items(x)), \
+    transmitters = map(lambda x: conf.get_section(x), \
             t["TRANSMITTERS"].split(","))
 
     rx_output = []
@@ -83,7 +83,7 @@ def node_new(request):
                             data)
             else:
                 # now user wants to add the node
-                conf = SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
+                conf = SvxlinkConf(SVXLINK_CONF)
                 conf.add_section(node)
                 conf.write()
 
@@ -104,7 +104,7 @@ def node_edit(request):
     """A page that manipulates TYPE=Voter and TYPE=Multi sections.
 
     """
-    conf = SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
+    conf = SvxlinkConf(SVXLINK_CONF)
 
     if request.method == "POST":
         rx = ",".join(request.POST.getlist("rx"))
@@ -146,3 +146,4 @@ def node_edit(request):
                 "nodes": output}
 
         return render_response(request, "node_edit.html", data)
+

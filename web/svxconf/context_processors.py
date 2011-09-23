@@ -4,6 +4,9 @@
 import comar
 import svxlinkconf
 
+
+from svxconf.settings import SVXLINK_CONF
+
 def is_svxlink_running(request):
     # FIXME: Other distros will need different ways of checking the
     # service. Code this part so that it is flexible
@@ -21,7 +24,7 @@ def is_svxlink_running(request):
         return {"is_svxlink_running": True}
 
 def total_remote_nodes(request):
-    conf = svxlinkconf.SvxlinkConf("/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf")
+    conf = svxlinkconf.SvxlinkConf(SVXLINK_CONF)
 
     return {"total_remote_nodes": len(conf.get_remote_nodes())}
 

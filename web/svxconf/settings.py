@@ -142,3 +142,8 @@ LOGGING = {
         },
     }
 }
+
+
+SVXLINK_CONF = "/home/eren/sourcebox/github/svxlinkconf/etc/svxlink.conf"
+ROOT_DIR = "/home/eren/sourcebox/github/svxlinkconf/web/svxconf"
+SERVICE_MANAGE_DIR = ROOT_DIR + "/service-manage"
