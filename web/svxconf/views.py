@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
+import time
+
 from svxlinkconf import SvxlinkConf, \
                         SvxlinkTypeNet
 
@@ -147,3 +150,22 @@ def node_edit(request):
 
         return render_response(request, "node_edit.html", data)
 
+def svxlink_stop(request):
+    # change modification time of STOP file. Our inotify watcher
+    # automatically restarts svxlink. The web application should not be
+    # run as root because of security measures. Instead of restarting
+    # the service from web application, I basically watch the files
+    # inside the app, and do actions based on the files written.
+    os.utime(os.path.join(SERVICE_MANAGE_DIR, "STOP"), None)
+
+    # wait 1 second for stopping svxlink. Otherwise, our context
+    # processor indicates that the server is running
+    time.sleep(0.5)
+
+    return render_response(request, "svxlink_stop.html")
+
+def svxlink_start(request):
+    os.utime(os.path.join(SERVICE_MANAGE_DIR, "START"), None)
+    time.sleep(0.5)
+
+    return render_response(request, "svxlink_start.html")

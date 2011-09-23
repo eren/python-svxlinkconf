@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     url(r'^hakkinda/$', 'svxconf.views.about'),
     url(r'^node/new/$', 'svxconf.views.node_new'),
     url(r'^node/edit/$', 'svxconf.views.node_edit'),
+    url(r'^svxlink/start/$', 'svxconf.views.svxlink_start'),
+    url(r'^svxlink/stop/$', 'svxconf.views.svxlink_stop'),
     url(r'^$', 'svxconf.views.home'),
     # url(r'^svxconf/', include('svxconf.foo.urls')),
 
