@@ -1,7 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from collections import OrderedDict
+import sys
+
+# collections.OrderedDict is not available in older
+# versions of Python. Import an OrderedDict for
+# older versions
+if (2,7) > sys.version_info:
+    from ordereddict import OrderedDict
+else:
+    from collections import OrderedDict
 
 import iniparse
 from ConfigParser import NoSectionError, \
@@ -425,6 +433,7 @@ class SvxlinkConf():
     def foo(self):
         #f = SvxlinkTypeNet("ErenTurkay", [("tcp_port", "5220"), ("auth_key", "testtest")])
         f = self.get_section("Rx1")
+	print f
 
         print f.is_online()
 
